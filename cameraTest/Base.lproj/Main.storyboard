@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="cameraTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +16,101 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6xI-aI-aq2">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="image Data here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nHA-My-20U">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZg-Ew-Ccg">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="109" id="bNs-5G-COQ"/>
+                                </constraints>
+                                <state key="normal" title="take pic"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bNs-5G-COQ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="bNs-5G-COQ"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="didPressTakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hNW-BS-910"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NZg-Ew-Ccg" firstAttribute="top" secondItem="nHA-My-20U" secondAttribute="bottom" constant="8" symbolic="YES" id="Dfi-xO-SDU"/>
+                            <constraint firstItem="nHA-My-20U" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="I9A-Mn-Nxg">
+                                <variation key="widthClass=compact" constant="-76"/>
+                            </constraint>
+                            <constraint firstItem="nHA-My-20U" firstAttribute="leading" secondItem="6xI-aI-aq2" secondAttribute="leading" id="McB-dC-5EC"/>
+                            <constraint firstAttribute="trailing" secondItem="6xI-aI-aq2" secondAttribute="trailing" id="R9G-H4-Al3"/>
+                            <constraint firstItem="6xI-aI-aq2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="f8H-mD-XMo"/>
+                            <constraint firstItem="6xI-aI-aq2" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gwe-Ua-cK1">
+                                <variation key="widthClass=compact" constant="28"/>
+                            </constraint>
+                            <constraint firstItem="NZg-Ew-Ccg" firstAttribute="centerX" secondItem="nHA-My-20U" secondAttribute="centerX" id="ohC-9U-6XS"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6xI-aI-aq2" secondAttribute="bottom" constant="250" id="qqa-x8-lxb"/>
+                            <constraint firstItem="nHA-My-20U" firstAttribute="trailing" secondItem="6xI-aI-aq2" secondAttribute="trailing" id="vmx-UW-pTe"/>
+                            <constraint firstItem="nHA-My-20U" firstAttribute="top" secondItem="6xI-aI-aq2" secondAttribute="bottom" constant="1" id="w5f-V4-3jF"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="6xI-aI-aq2"/>
+                                <exclude reference="nHA-My-20U"/>
+                                <exclude reference="NZg-Ew-Ccg"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="R9G-H4-Al3"/>
+                                <exclude reference="f8H-mD-XMo"/>
+                                <exclude reference="gwe-Ua-cK1"/>
+                                <exclude reference="I9A-Mn-Nxg"/>
+                                <exclude reference="McB-dC-5EC"/>
+                                <exclude reference="vmx-UW-pTe"/>
+                                <exclude reference="w5f-V4-3jF"/>
+                                <exclude reference="Dfi-xO-SDU"/>
+                                <exclude reference="ohC-9U-6XS"/>
+                                <exclude reference="qqa-x8-lxb"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="6xI-aI-aq2"/>
+                                <include reference="nHA-My-20U"/>
+                                <include reference="NZg-Ew-Ccg"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="R9G-H4-Al3"/>
+                                <include reference="f8H-mD-XMo"/>
+                                <include reference="gwe-Ua-cK1"/>
+                                <include reference="I9A-Mn-Nxg"/>
+                                <include reference="McB-dC-5EC"/>
+                                <include reference="vmx-UW-pTe"/>
+                                <include reference="w5f-V4-3jF"/>
+                                <include reference="Dfi-xO-SDU"/>
+                                <include reference="ohC-9U-6XS"/>
+                                <include reference="qqa-x8-lxb"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="capturedImage" destination="6xI-aI-aq2" id="iBb-5v-5z8"/>
+                        <outlet property="emotionData" destination="nHA-My-20U" id="KB4-RW-rA9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="334.5" y="348"/>
         </scene>
     </scenes>
 </document>
