@@ -12,19 +12,27 @@ import AVFoundation
 
 class ViewController: UIViewController {
     
+    //MARK: variables
+    
     var dataString = NSString()
+    var captureSession: AVCaptureSession?
+    var stillImageOutput: AVCaptureStillImageOutput?
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    
+    //MARK: outlets
     
     @IBOutlet weak var capturedImage: UIImageView!
     @IBOutlet weak var emotionData: UITextView!
+    
+    //MARK: actions
     
     @IBAction func didPressTakePhoto(sender: UIButton) {
        
          if ((self.captureSession?.sessionPreset) != nil) {
 
-            print("button pressed")
         let videoConnection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
                 stillImageOutput?.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
-                print("inside completionhandler")
+                
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
                 let dataProvider = CGDataProviderCreateWithCFData(imageData)
                     let intent = CGColorRenderingIntent.RenderingIntentDefault
@@ -46,9 +54,7 @@ class ViewController: UIViewController {
 
     }
 
-    var captureSession: AVCaptureSession?
-    var stillImageOutput: AVCaptureStillImageOutput?
-    var previewLayer: AVCaptureVideoPreviewLayer?
+    
     
     
 
@@ -56,31 +62,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //set up capture session once view loads
+        
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
         captureSession?.sessionPreset = AVCaptureSessionPreset1280x720
         
-        
-        print("inside view did load")
-        //var backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+        //find the front facing camera
         
         guard let frontCam = AVCaptureDevice.devices().filter({ $0.position == .Front })
             .first as? AVCaptureDevice else {
                 fatalError("No front facing camera found")
         }
-
-        
-        
         let input = try! AVCaptureDeviceInput(device: frontCam)
         
         if  captureSession!.canAddInput(input) {
             print("input added")
             captureSession!.addInput(input)
-            
 
         }
         
-        
+        //run session
         captureSession?.startRunning()
         
         stillImageOutput = AVCaptureStillImageOutput()
@@ -89,18 +91,13 @@ class ViewController: UIViewController {
         captureSession!.addOutput(stillImageOutput)
 
         print("leaving viewdidload")
-       
-        
+
             }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    // uploading the taken picture to the api
     func upload_request(imageData: NSData)
     {
-        print("inside upload request")
+        //start nsurl request, the values are from the website
         let url:NSURL = NSURL(string: "https://api.projectoxford.ai/emotion/v1.0/recognize")!
         let session = NSURLSession.sharedSession()
         
@@ -126,12 +123,13 @@ class ViewController: UIViewController {
                     return
                 }
                 print("data returned")
-                //uncomment to get all data returned even error codes
+                //when no data is returned app crashes ie. cannot find a face
                 self.dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+                // print data to debugger
                 print(self.dataString)
                 
                 
-                
+                // parse json using built in functionaity
                 do {
                     let json = try NSJSONSerialization.JSONObjectWithData(data!, options:NSJSONReadingOptions.MutableContainers)
                     
@@ -172,11 +170,7 @@ class ViewController: UIViewController {
                     ]
                     
                     
-                    //for (key,value) in dictionary {
-                    
-                    //}
-                    //print(dictionary)
-                    
+                    // since the upload is in a seperate thread access the main thread to set the returned data
                     dispatch_async(dispatch_get_main_queue()) {
                         self.emotionData.text = self.dataString as String
                     }
@@ -191,7 +185,7 @@ class ViewController: UIViewController {
         
         
         
-        
+    
         task.resume()
         
         
